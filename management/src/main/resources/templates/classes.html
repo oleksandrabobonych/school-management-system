@@ -1,82 +1,134 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uk" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Мої класи | Панель Вчителя</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
-        .class-card {
-            transition: transform 0.2s;
-            border-left: 5px solid #0d6efd;
+        :root {
+            --main-color: #4f46e5;
+            --bg-soft: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
         }
-        .class-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+
+        body {
+            background: var(--bg-soft);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+        }
+
+        .navbar {
+            background: #ffffff !important;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .btn-primary {
+            background: var(--main-color);
+            border: none;
+            border-radius: 10px;
+        }
+
+        .btn-primary:hover {
+            background: #4338ca;
+        }
+
+        .badge {
+            background: #eef2ff;
+            color: var(--main-color);
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .text-muted {
+            color: var(--text-muted) !important;
         }
     </style>
 </head>
-<body class="bg-light">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm mb-5">
+<body>
+
+<nav class="navbar mb-5">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="/">Мої класи</a>
-        <a href="/" class="btn btn-outline-light btn-sm">Назад до панелі</a>
+        <span class="fw-bold">Мої класи</span>
+        <a href="/" class="btn btn-outline-secondary btn-sm">Назад</a>
     </div>
 </nav>
 
 <div class="container">
-    <h2 class="text-primary fw-bold mb-4">Список ваших класів</h2>
-    <p class="text-muted mb-5">Тут відображаються класи, в яких ви викладаєте або є класним керівником.</p>
+
+    <h3 class="fw-bold mb-2">Список класів</h3>
+    <p class="text-muted mb-5">
+        Тут відображаються класи, в яких ви викладаєте
+    </p>
 
     <div class="row g-4">
+
+        <!-- CLASS -->
         <div class="col-md-4">
-            <div class="card shadow-sm border-0 class-card h-100">
-                <div class="card-body p-4">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h2 class="fw-bold mb-0">10-А</h2>
-                        <span class="badge bg-primary rounded-pill">Інформатика</span>
-                    </div>
-                    <p class="text-secondary mb-1"> Учнів: <strong>24</strong></p>
-                    <p class="text-secondary"> Середній бал: <strong class="text-success">9.4</strong></p>
-                    <hr>
-                    <a href="/students/10-A" class="btn btn-outline-primary w-100">Перейти до списку учнів</a>
+            <div class="card p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="fw-bold mb-0">10-А</h4>
+                    <span class="badge">Інформатика</span>
                 </div>
+
+                <p class="text-muted mb-1">Учнів: <strong>24</strong></p>
+                <p class="text-muted">Середній бал: <strong>9.4</strong></p>
+
+                <a href="/students/10-A" class="btn btn-primary w-100 mt-3">
+                    Відкрити
+                </a>
             </div>
         </div>
 
+        <!-- CLASS -->
         <div class="col-md-4">
-            <div class="card shadow-sm border-0 class-card h-100" style="border-left-color: #198754;">
-                <div class="card-body p-4">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h2 class="fw-bold mb-0">11-Б</h2>
-                        <span class="badge bg-success rounded-pill">Математика</span>
-                    </div>
-                    <p class="text-secondary mb-1">Учнів: <strong>28</strong></p>
-                    <p class="text-secondary"> Середній бал: <strong class="text-success">8.7</strong></p>
-                    <hr>
-                    <a href="/students/11-B" class="btn btn-outline-success w-100">Перейти до списку учнів</a>
+            <div class="card p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="fw-bold mb-0">11-Б</h4>
+                    <span class="badge">Математика</span>
                 </div>
+
+                <p class="text-muted mb-1">Учнів: <strong>28</strong></p>
+                <p class="text-muted">Середній бал: <strong>8.7</strong></p>
+
+                <a href="/students/11-B" class="btn btn-primary w-100 mt-3">
+                    Відкрити
+                </a>
             </div>
         </div>
 
+        <!-- CLASS -->
         <div class="col-md-4">
-            <div class="card shadow-sm border-0 class-card h-100" style="border-left-color: #ffc107;">
-                <div class="card-body p-4">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h2 class="fw-bold mb-0">9-В</h2>
-                        <span class="badge bg-warning text-dark rounded-pill">Фізика</span>
-                    </div>
-                    <p class="text-secondary mb-1"> Учнів: <strong>30</strong></p>
-                    <p class="text-secondary">Середній бал: <strong class="text-success">10.1</strong></p>
-                    <hr>
-                    <a href="/students/9-V" class="btn btn-outline-warning text-dark w-100">Перейти до списку учнів</a>
+            <div class="card p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="fw-bold mb-0">9-В</h4>
+                    <span class="badge">Фізика</span>
                 </div>
+
+                <p class="text-muted mb-1">Учнів: <strong>30</strong></p>
+                <p class="text-muted">Середній бал: <strong>10.1</strong></p>
+
+                <a href="/students/9-V" class="btn btn-primary w-100 mt-3">
+                    Відкрити
+                </a>
             </div>
         </div>
+
     </div>
 </div>
 
-</body>
-</html>
 </body>
 </html>
