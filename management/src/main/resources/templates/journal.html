@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Журнал успішності | Панель Вчителя</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/"> Електронний Журнал</a>
+        <a href="/" class="btn btn-outline-light btn-sm">Назад до панелі</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-body p-4">
+            <h2 class="text-primary fw-bold mb-4">Зведені оцінки учнів</h2>
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card bg-primary text-white shadow-sm">
+                        <div class="card-body text-center">
+                            <h6 class="text-uppercase small opacity-75">Середній бал класу</h6>
+                            <h2 class="display-6 fw-bold" th:text="${averageGrade}">0.0</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-success text-white shadow-sm">
+                        <div class="card-body text-center">
+                            <h6 class="text-uppercase small opacity-75">Перевірено робіт</h6>
+                            <h2 class="display-6 fw-bold" th:text="${totalGraded}">0</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped align-middle">
+                    <thead class="bg-primary text-white">
+                    <tr>
+                        <th>№</th>
+                        <th>Назва завдання</th>
+                        <th>Текст відповіді</th>
+                        <th class="text-center">Оцінка</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="sub, iter : ${gradedSubmissions}">
+                        <td th:text="${iter.count}">1</td>
+                        <td class="fw-bold" th:text="${sub.assignment.title}">Математика</td>
+                        <td th:text="${sub.content}" class="text-truncate" style="max-width: 300px;">Зміст...</td>
+                        <td class="text-center">
+                            <span class="badge bg-success fs-5 px-3" th:text="${sub.grade}">12</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div th:if="${#lists.isEmpty(gradedSubmissions)}" class="text-center py-5">
+                <h4 class="text-muted">Журнал поки порожній </h4>
+                <p>Оцініть надіслані роботи, щоб вони з'явилися тут.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

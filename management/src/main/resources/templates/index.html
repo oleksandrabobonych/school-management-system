@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель Вчителя | Шкільний Портал</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .assignment-card {
+            transition: transform 0.2s;
+            border: 1px solid #dee2e6;
+        }
+        .assignment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+        }
+        .navbar-brand { font-size: 1.5rem; }
+    </style>
+</head>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="#">Панель Вчителя</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link active" href="/">Керування завданнями</a></li>
+                <li class="nav-item"><a class="nav-link" href="/journal">Журнал успішності</a></li>
+                <li class="nav-item"><a class="nav-link" href="/classes">Мої класи</a></li>
+            </ul>
+            <div class="d-flex align-items-center text-white">
+                <a class="btn btn-outline-light btn-sm" href="/login">Вийти</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card mb-5 shadow-sm border-0 rounded-3">
+        <div class="card-body p-4">
+            <h4 class="card-title text-success mb-4"> Створити нове завдання для учнів</h4>
+            <form th:action="@{/add-assignment}" method="post" class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Предмет та тема</label>
+                    <input type="text" name="title" class="form-control" placeholder="Напр: Алгебра: Квадратні рівняння" required>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Інструкції</label>
+                    <input type="text" name="description" class="form-control" placeholder="Що мають зробити учні?" required>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label fw-bold">Термін здачі</label>
+                    <input type="date" name="deadline" class="form-control" required>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-success w-100 fw-bold">Опублікувати</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <h2 class="text-primary fw-bold mb-4"> Активні завдання в базі</h2>
+
+    <div class="row">
+        <div th:each="task : ${assignments}" class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm assignment-card border-0 rounded-3">
+                <div class="card-body p-4">
+                    <h3 class="card-title h4 text-dark fw-bold mb-3" th:text="${task.title}">Назва</h3>
+                    <p class="card-text text-muted mb-4" th:text="${task.description}">Опис</p>
+
+                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                        <span class="badge bg-warning text-dark fs-6 px-3 py-2 shadow-sm">
+                             До: <span th:text="${task.deadline}">2026-03-19</span>
+                        </span>
+
+                        <div class="d-flex align-items-center">
+                            <form th:action="@{/delete-assignment}" method="post" class="d-inline">
+                                <input type="hidden" name="id" th:value="${task.id}">
+                                <button type="submit" class="btn btn-link text-danger text-decoration-none btn-sm me-3"
+                                        onclick="return confirm('Ви впевнені, що хочете видалити це завдання?')">
+                                    Видалити
+                                </button>
+                            </form>
+                            <a href="/submissions" class="btn btn-primary btn-sm px-4 rounded-pill shadow-sm">
+                                Переглянути відповіді
+                                <span class="badge bg-white text-primary ms-1"
+                                      th:text="${task.submissions != null ? task.submissions.size() : 0}">
+        0
+    </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${#lists.isEmpty(assignments)}" class="text-center py-5">
+        <div class="alert alert-light shadow-sm d-inline-block px-5">
+            <h4 class="text-muted">Завдань ще не створено </h4>
+            <p class="text-secondary mb-0">Скористайтеся формою вище, щоб додати першу роботу.</p>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
