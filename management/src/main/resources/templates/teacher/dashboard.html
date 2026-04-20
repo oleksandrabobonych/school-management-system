@@ -4,42 +4,122 @@
     <meta charset="UTF-8">
     <title>Панель вчителя</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --main-color: #4f46e5;
+            --bg-soft: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        body {
+            background: var(--bg-soft);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+        }
+
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .btn-primary {
+            background: var(--main-color);
+            border: none;
+            border-radius: 10px;
+        }
+
+        .btn-primary:hover {
+            background: #4338ca;
+        }
+
+        .table {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .table thead {
+            background: #f1f5f9;
+        }
+
+        .badge {
+            border-radius: 8px;
+        }
+
+        .text-muted {
+            color: var(--text-muted) !important;
+        }
+    </style>
 </head>
 
-<body class="container mt-5">
+<body>
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>Панель вчителя</h1>
-    <a href="/teacher/add" class="btn btn-primary">+ Нове завдання</a>
-</div>
+<div class="container py-5">
 
-<table class="table table-hover border">
-    <thead class="table-light">
-    <tr>
-        <th>Назва</th>
-        <th>Опис</th>
-        <th>Дедлайн</th>
-        <th>Дії</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="a : ${assignments}">
-        <td th:text="${a.title}" class="fw-bold"></td>
-        <td th:text="${a.description}"></td>
-        <td th:text="${a.deadline}"></td>
-        <td>
-            <a th:href="@{'/teacher/delete/' + ${a.id}}"
-               class="btn btn-sm btn-outline-danger">
-                🗑 Видалити
-            </a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="fw-bold mb-0">Панель вчителя</h3>
+            <small class="text-muted">Керування завданнями</small>
+        </div>
 
-<div th:if="${assignments.isEmpty()}"
-     class="alert alert-info">
-    Завдань поки немає.
+        <a href="/teacher/add" class="btn btn-primary px-4">
+            + Нове завдання
+        </a>
+    </div>
+
+    <!-- TABLE -->
+    <div class="card p-3">
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+
+                <thead>
+                <tr>
+                    <th>Назва</th>
+                    <th>Опис</th>
+                    <th>Дедлайн</th>
+                    <th class="text-end">Дії</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="a : ${assignments}">
+
+                    <td class="fw-bold" th:text="${a.title}"></td>
+
+                    <td class="text-muted text-truncate"
+                        style="max-width: 250px;"
+                        th:text="${a.description}"></td>
+
+                    <td>
+                        <span class="badge bg-light text-dark px-3 py-2"
+                              th:text="${a.deadline}"></span>
+                    </td>
+
+                    <td class="text-end">
+                        <a th:href="@{'/teacher/delete/' + ${a.id}}"
+                           class="btn btn-sm btn-outline-danger">
+                            Видалити
+                        </a>
+                    </td>
+
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div th:if="${assignments.isEmpty()}" class="text-center py-5">
+        <h5 class="text-muted">Поки що немає завдань</h5>
+        <p class="text-muted">Створіть перше завдання, щоб почати</p>
+    </div>
+
 </div>
 
 </body>
